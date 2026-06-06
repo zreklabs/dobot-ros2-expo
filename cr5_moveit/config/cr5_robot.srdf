@@ -32,4 +32,14 @@
     <disable_collisions link1="Link4" link2="Link6" reason="Never"/>
     <disable_collisions link1="Link4" link2="base_link" reason="Never"/>
     <disable_collisions link1="Link5" link2="Link6" reason="Adjacent"/>
+    <!-- ================= D405 camera (新規追加リンク) =================
+         camera_mount は Link6 に固定取付, camera_link(D405本体) は camera_mount に固定取付.
+         手先リンクとは常時近接するため自己衝突判定を無効化する. -->
+    <disable_collisions link1="camera_mount" link2="camera_link" reason="Adjacent"/>
+    <disable_collisions link1="camera_mount" link2="Link6" reason="Adjacent"/>
+    <disable_collisions link1="camera_mount" link2="Link5" reason="Never"/>
+    <disable_collisions link1="camera_mount" link2="Link4" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="Link6" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="Link5" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="Link4" reason="Never"/>
 </robot>
