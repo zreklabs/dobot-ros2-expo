@@ -441,6 +441,51 @@
       link="camera_mount" />
   </joint>
 
+  <!-- ================= Custom: PEGA-100-40 gripper ================= -->
+  <!-- STL は mm 単位 (scale=0.001 で m 変換). STL ローカル座標系では
+       Y=0 がフランジ取付面で +Y 方向に指が伸びる (X≈79mm, Y≈112mm, Z≈29mm).
+       Link6 のツール座標系は +Z がツール先端方向なので, STL の +Y を Link6 の +Z に
+       向けるため X軸まわりに -90deg 回転 (rpy="-1.5708 0 0"). -->
+  <link
+    name="gripper">
+    <visual>
+      <origin
+        xyz="0 0.0145 0.025"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dobot_rviz/meshes/cr5/PEGA-100-40.STL"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.6 0.6 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0.0145 0.025"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <mesh
+          filename="package://dobot_rviz/meshes/cr5/PEGA-100-40.STL"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link6" />
+    <child
+      link="gripper" />
+  </joint>
+
   <!-- ================= D405 camera ================= -->
   <!-- このbase URDFは camera_mount までを定義する.
        D405本体(camera_link/各optical frame)は realsense2_description の公式 _d405.urdf.xacro
