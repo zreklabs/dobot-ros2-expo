@@ -399,4 +399,54 @@
       effort="0"
       velocity="0" />
   </joint>
+
+  <!-- ================= Custom: D405 camera mount ================= -->
+  <link
+    name="camera_mount">
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 3.14159" />
+      <geometry>
+        <mesh
+          filename="package://dobot_rviz/meshes/cr5/D405_mount.STL"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 3.14159" />
+      <geometry>
+        <mesh
+          filename="package://dobot_rviz/meshes/cr5/D405_mount.STL"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_mount_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link6" />
+    <child
+      link="camera_mount" />
+  </joint>
+
+  <!-- ================= D405 camera ================= -->
+  <!-- このbase URDFは camera_mount までを定義する.
+       D405本体(camera_link/各optical frame)は realsense2_description の公式 _d405.urdf.xacro
+       を上位 cr5_moveit/config/cr5_robot.urdf.xacro 側で include し, camera_mount を parent
+       として接続する(王道構成). 取付実測オフセットは, その include の <origin> に
+       xyz="0 0.1115 0.028" として渡す.
+       optical frame群(depth/color等)はrealsenseドライバが実測extrinsics付きで publish する
+       ので, ドライバは publish_tf:=true (デフォルト) のまま使う. -->
 </robot>

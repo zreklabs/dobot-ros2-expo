@@ -5,6 +5,19 @@
     <!-- Import cr5_robot urdf file -->
     <xacro:include filename="$(find dobot_rviz)/urdf/cr5_robot.urdf" />
 
+    <!-- ================= D405 camera (公式 realsense2_description マクロ) =================
+         camera_mount(base URDFで定義) に D405 を接続する. use_nominal_extrinsics:=false の場合,
+         このマクロは camera_link までを作り, depth/color等の optical frame は realsense ドライバが
+         実測extrinsics付きで publish する(実機運用の王道). Gazebo/シミュ等でドライバが居ない場合は
+         use_nominal_extrinsics:=true にするとマクロが nominal な optical frame を生成する.
+         <origin> は camera_mount -> D405取付の実測オフセット(m). -->
+    <xacro:arg name="use_nominal_extrinsics" default="false" />
+    <xacro:include filename="$(find realsense2_description)/urdf/_d405.urdf.xacro" />
+    <xacro:sensor_d405 parent="camera_mount" name="camera"
+                       use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+      <origin xyz="0 0.0905 0.014" rpy="-1.5708 -1.5708 0" />
+    </xacro:sensor_d405>
+
     <!-- Import control_xacro -->
     <xacro:include filename="cr5_robot.ros2_control.xacro" />
 
